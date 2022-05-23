@@ -15,24 +15,28 @@
     <script type="module" src="/src/main.js"></script>
 
     <script>
-      function log (context, message) {
-        console.log(context, message)
-      }
+      const invoke = window.__TAURI__.invoke;
+function log (context, message) {
+  invoke("log", {context: context, message: message})
+}
 
-      window.__TAURI__.event.listen('message', (event) => {
-        log('PEER', event.payload)
-      })
+window.__TAURI__.event.listen('message', (event) => {
+  log('PEER', event.payload)
+})
 
-      const { Command } = window.__TAURI__.shell
 
-      const command = Command.sidecar('binaries/app')
-      command.on('close', data => {
-        log('UI', `command finished with code ${data.code} and signal ${data.signal}`)
-      })
-      command.on('error', error => log('UI', `command error: "${error}"`))
-      command.stdout.on('data', line => log('UI', `command stdout: "${line}"`))
-      command.stderr.on('data', line => log('UI', `command stderr: "${line}"`))
-      command.spawn()
+const { Command } = window.__TAURI__.shell
+
+const command = Command.sidecar('binaries/peer')
+command.on('close', data => {
+  log('UI', `command finished with code ${data.code} and signal ${data.signal}`)
+})
+command.on('error', error => log('UI', `command error: "${error}"`))
+command.stdout.on('data', line => log('UI', `command stdout: "${line}"`))
+command.stderr.on('data', line => log('UI', `command stderr: "${line}"`))
+
+command.spawn()
+
     </script>
   </body>
 </html>

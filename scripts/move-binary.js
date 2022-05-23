@@ -18,8 +18,8 @@ async function main () {
     console.error('Failed to determine platform target triple')
   }
   fs.renameSync(
-    `src-tauri/binaries/app${extension}`,
-    `src-tauri/binaries/app-${targetTriple}${extension}`
+    `src-tauri/binaries/peer${extension}`,
+    `src-tauri/binaries/peer-${targetTriple}${extension}`
   )
 }
 

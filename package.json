@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "build:peer": "npm run build:peer:bundle && npm run build:peer:pkg",
     "build:peer:bundle": "noderify peer.js > peer.bundle.js",
-    "build:peer:pkg": "pkg package.json --output src-tauri/binaries/peer --compress GZip && node scripts/move-binary.js",
+    "build:peer:pkg": "pkg package.json --output src-tauri/binaries/peer && node scripts/move-binary.js",
     "tauri": "tauri",
     "build": "npm run tauri build"
   },
